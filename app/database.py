@@ -1,6 +1,13 @@
-from sqlalchemy import create_engine #bring create_engine from sqlalchemy
-from sqlalchemy.orm import sessionmaker #bring sessionmaker from sqlalchemy.orm 
+import os
 
-DATABASE_URL = "postgresql://postgres:password@localhost:5432/task_db" #the path of the DB and information 
-engine = create_engine(DATABASE_URL) 
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
+
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if not DATABASE_URL:
+    raise RuntimeError("DATABASE_URL environment variable is not set.")
+
+engine = create_engine(DATABASE_URL)
 SessionLocal = sessionmaker(bind=engine)

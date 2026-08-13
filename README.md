@@ -1,19 +1,18 @@
 # Task Manager API
 
-A simple backend REST API for managing tasks, built with FastAPI and PostgreSQL.
-
+A small REST API for managing tasks. I built this project to practice FastAPI, PostgreSQL, SQLAlchemy, Pydantic, and basic backend project structure.
 
 ## Features
 
-- Create new tasks
-- Get all tasks
-- Get task by ID
-- Update tasks
-- Delete tasks
-- Structured project architecture (routes, services, schemas)
+- Create a task.
+- Get all tasks.
+- Filter tasks by completion status.
+- Get one task by ID.
+- Update a task.
+- Delete a task.
+- Return validated responses with Pydantic.
 
-
-## Tech Stack
+## Tech stack
 
 - Python
 - FastAPI
@@ -22,56 +21,90 @@ A simple backend REST API for managing tasks, built with FastAPI and PostgreSQL.
 - Pydantic
 - Uvicorn
 
+## Project structure
 
-## Project Structure
 ```text
-task-manager-api/
-├── app/
-│   ├── main.py
-│   ├── database.py
-│   ├── models.py
-│   ├── schemas.py
-|   ├── init_db.py
-│   ├── routes/
-│   │   └── tasks.py
-│   └── services/
-│       └── task_service.py
-│
-│── requirements.txt
-│── .gitignore
-│── README.md
+task-manager-API/
+|-- app/
+|   |-- main.py
+|   |-- database.py
+|   |-- init_db.py
+|   |-- models.py
+|   |-- schemas.py
+|   |-- routes/
+|   |   `-- tasks.py
+|   `-- services/
+|       `-- task_service.py
+|-- .env.example
+|-- requirements.txt
+`-- README.md
 ```
 
-## Installation
+## Setup
+
+1. Create and activate a virtual environment.
+2. Install the dependencies:
+
 ```bash
 pip install -r requirements.txt
 ```
 
-## Run the Server
+3. Create a PostgreSQL database named `task_db`.
+4. Set the database connection URL.
+
+PowerShell:
+
+```powershell
+$env:DATABASE_URL="postgresql://postgres:your_password@localhost:5432/task_db"
+```
+
+Command Prompt:
+
+```cmd
+set DATABASE_URL=postgresql://postgres:your_password@localhost:5432/task_db
+```
+
+5. Create the table:
+
+```bash
+python -m app.init_db
+```
+
+6. Run the API:
+
 ```bash
 uvicorn app.main:app --reload
 ```
 
-## API Endpoints
+Open the interactive API documentation at:
+
 ```text
-| Method | Endpoint    | Description     |
-| ------ | ----------- | --------------- |
-| POST   | /tasks      | Create task     |
-| GET    | /tasks      | Get all tasks   |
-| GET    | /tasks/{id} | Get single task |
-| PUT    | /tasks/{id} | Update task     |
-| DELETE | /tasks/{id} | Delete task     |
+http://127.0.0.1:8000/docs
 ```
 
-## Future Improvements
+## Endpoints
 
-- User authentication
-- Task priority levels
-- Due dates
-- Docker support
-- Unit testing
-- Author
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| POST | `/tasks` | Create a task |
+| GET | `/tasks` | Get all tasks |
+| GET | `/tasks?completed=true` | Filter completed tasks |
+| GET | `/tasks/{task_id}` | Get one task |
+| PUT | `/tasks/{task_id}` | Update a task |
+| DELETE | `/tasks/{task_id}` | Delete a task |
 
+Example request body:
+
+```json
+{
+  "title": "Learn FastAPI",
+  "completed": false
+}
+```
+
+## Current scope
+
+This is a learning project focused on CRUD operations and database integration. It does not currently include authentication, automated tests, Docker, or deployment configuration.
 
 ## Author
 

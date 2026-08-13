@@ -1,14 +1,14 @@
-from pydantic import BaseModel #bring BaseModel from pydantic library for validate the FASTAPI values 
+from pydantic import BaseModel, ConfigDict
 
-class TaskCreate(BaseModel): #this class to ensure the request of FASTAPI values JSON type
-    title: str
-    completed: bool =False
 
-class TaskResponse(BaseModel): #this class to ensure the Response of FASTAPI values JSON type
+class TaskCreate(BaseModel):
     title: str
+    completed: bool = False
+
+
+class TaskResponse(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     title: str
     completed: bool
-
-    class Config: 
-        from_attributes= True
